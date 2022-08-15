@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>切り替えタブ</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+<style>
+  .tabMenu {
+    width: 300px;
+  }
+
+  p {
+    width: 100px;
+    display: inline;
+  }
+
+  .select {
+    background-color: black;
+    color: white;
+  }
+</style>
+<body>
+
+  <div id="app">
+    <div class="tabMenu">
+      <p v-for="tab in tabs" v-bind:key="tab" v-bind:class="{ select: tab === selectTab }"
+        v-on:click="selectTab = tab">
+        {{ tab }}
+    </p>
+    </div>
+    <component class="currentTabComponent" v-bind:is="currentTabComponent"></component>
+  </div>
+  <script>
+    Vue.component('タブ１', {
+        template: '<div>コンテンツ１</div>'
+      })
+
+      Vue.component('タブ２', {
+        template: '<div>コンテンツ２</div>'
+      })
+
+      Vue.component('タブ３', {
+        template: '<div>コンテンツ３</div>'
+      })
+
+      new Vue({
+        el: '#app',
+        data: {
+          selectTab: 'タブ１',
+          tabs: ['タブ１', 'タブ２', 'タブ３']
+        },
+        computed: {
+          currentTabComponent: function () {
+            return this.selectTab
+          }
+        }
+      })
+  </script>
+</body>
+</html>
